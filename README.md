@@ -11,15 +11,15 @@ Housedb 1.0
 数据统计
 ====
 - __各个区域的房源数量情况__
-![](https://raw.githubusercontent.com/coolcooldee/housedb/master/src/main/resources/images/demo3.png)
+![](https://raw.githubusercontent.com/dee1024/housedb/master/src/main/resources/images/demo3.png)
 - __各个区域的均价情况__
-![](https://raw.githubusercontent.com/coolcooldee/housedb/master/src/main/resources/images/demo4.png)
+![](https://raw.githubusercontent.com/dee1024/housedb/master/src/main/resources/images/demo4.png)
 - __不同楼龄的房源数量情况__
-![](https://raw.githubusercontent.com/coolcooldee/housedb/master/src/main/resources/images/demo5.png)
+![](https://raw.githubusercontent.com/dee1024/housedb/master/src/main/resources/images/demo5.png)
 - __关注数最高的房源情况__
-![](https://raw.githubusercontent.com/coolcooldee/housedb/master/src/main/resources/images/demo6.png)
+![](https://raw.githubusercontent.com/dee1024/housedb/master/src/main/resources/images/demo6.png)
 
 房源价格变更
 ======
-![](https://raw.githubusercontent.com/coolcooldee/housedb/master/src/main/resources/images/demo.PNG)
-![](https://raw.githubusercontent.com/coolcooldee/housedb/master/src/main/resources/images/demo2.PNG)
+![](https://raw.githubusercontent.com/dee1024/housedb/master/src/main/resources/images/demo.PNG)
+![](https://raw.githubusercontent.com/dee1024/housedb/master/src/main/resources/images/demo2.PNG)
