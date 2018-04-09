@@ -106,6 +106,7 @@ CREATE TABLE `house` (
   `roomSize` double(32,0) DEFAULT NULL,
   `status` int(11) DEFAULT '1' COMMENT '1:在售；2:已成交;-1:已下架',
   `chengjiaoPrice` double DEFAULT NULL COMMENT '成交价',
+  `chengjiaoDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_code` (`code`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=64037 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

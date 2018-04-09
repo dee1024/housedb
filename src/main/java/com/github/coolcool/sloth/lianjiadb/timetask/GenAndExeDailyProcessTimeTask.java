@@ -31,6 +31,9 @@ public class GenAndExeDailyProcessTimeTask extends TimerTask {
     @Value("${dev:false}")
     boolean dev;
 
+    @Value("${needproxy:false}")
+    boolean needproxy;
+
     @Override
     public void run() {
 
@@ -39,21 +42,21 @@ public class GenAndExeDailyProcessTimeTask extends TimerTask {
     /**
      * 生成当天任务
      */
-    @Scheduled(cron="0 0/15 * * * ?")
+    @Scheduled(cron="0 0/1 * * * ?")
     public void gen() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
         if(!dev && hour != genprocessHour)
             return;
 
-        if(MyHttpClient.available){
-            log.info("开始执行genProcessing...");
-            try {
-                processService.genProcesses();
-            }catch (Throwable t){
-                t.printStackTrace();
-            }
+        if(needproxy && !MyHttpClient.available){
+            log.warn("请配置或者录入代理服务，或者设置为不需要代理服务...");
+            return;
         }
+
+
+        processService.genProcesses();
+
     }
 
 
@@ -62,15 +65,16 @@ public class GenAndExeDailyProcessTimeTask extends TimerTask {
      * 根据当天的执行任务，按最小区域（车陂、华景）分页获取房屋链接地址，入库 houseindex
      */
     @Scheduled(cron="0 0/1 * * * ?")   //每5分钟执行一次
-    public void exe() {
-        if(MyHttpClient.available ){
-            log.info("开始执行houseUrlsFetching...");
-            try {
-                processService.fetchHouseUrls();
-            }catch (Throwable t){
-                t.printStackTrace();
-            }
+    public void exe() throws InterruptedException {
+
+        if(needproxy && !MyHttpClient.available){
+            log.warn("请配置或者录入代理服务，或者设置为不需要代理服务...");
+            return;
         }
+
+        log.info("开始执行houseUrlsFetching...");
+        processService.fetchHouseUrls();
+
     }
 
 

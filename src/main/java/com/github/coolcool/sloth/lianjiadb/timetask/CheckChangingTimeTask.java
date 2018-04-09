@@ -24,6 +24,9 @@ public class CheckChangingTimeTask extends TimerTask {
     @Value("${dev:false}")
     boolean dev;
 
+    @Value("${needproxy:false}")
+    boolean needproxy;
+
     @Value("${com.github.coolcool.sloth.lianjiadb.timetask.checkchanging.hour:9}")
     int checkchangingHour;
 
@@ -39,21 +42,24 @@ public class CheckChangingTimeTask extends TimerTask {
     @Scheduled(cron="0 0/1 * * * ?")
     public void run() {
 
-//        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-//
-//        if( hour != checkchangingHour && !dev) // 每天特定时间执行一次
-//            return;
-
-        if(MyHttpClient.available && !running){
-            running = true;
-            log.info("开始执行 checkChanging ...");
-            try {
-                processService.checkChange();
-            }catch (Throwable t){
-                t.printStackTrace();
-            }
-            running = false;
+        if(needproxy && !MyHttpClient.available){
+            log.warn("请配置或者录入代理服务，或者设置为不需要代理服务...");
+            return;
         }
+
+        if(running){
+            return;
+        }
+
+        running = true;
+        log.info("开始执行 checkChanging ...");
+        try {
+            processService.checkChange();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        running = false;
+
     }
 
 }
