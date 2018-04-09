@@ -358,7 +358,7 @@ public abstract class LianjiaWebUtil {
 
 
     public static House fetchAndGenHouseObject(String houseUrl) throws IOException {
-        House house = new House(houseUrl);
+//        House house = new House(houseUrl);
         String fangUrl = houseUrl;
         String result = MyHttpClient.get(fangUrl);
         //result = result.replace("\r","").replace("\n","").replaceAll(">(.*?)<","");

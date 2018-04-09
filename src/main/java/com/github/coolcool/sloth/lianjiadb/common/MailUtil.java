@@ -16,6 +16,11 @@ import java.util.Properties;
  */
 public abstract class MailUtil {
 
+    //注意:此处设置SMTP发件服务器的账号、密码
+    final static String MAIL = "AAAAAAAAAA@qq.com";
+    final static String PASSWORD = "PAAAAAAAAAA";
+    //注意:此处设置接受邮件通知的邮箱地址
+    final static String targetMail = "BBBBBBBBBB@qq.com";
 
     static Properties props = new Properties();
     static {
@@ -27,6 +32,7 @@ public abstract class MailUtil {
         props.setProperty("mail.host", "smtp.qq.com");
         // 发送邮件协议名称
         props.setProperty("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.from", MAIL);
         MailSSLSocketFactory sf = null;
         try {
             sf = new MailSSLSocketFactory();
@@ -40,9 +46,6 @@ public abstract class MailUtil {
 
 
     public static void send(String subject, String content){
-
-        String targetMail = "2394134029@qq.com";    //注意:此处设置接受邮件通知的邮箱地址
-
         // 设置环境信息
         Session session = Session.getInstance(props);
 
@@ -54,11 +57,11 @@ public abstract class MailUtil {
             // 设置邮件内容
             msg.setContent(content,"text/html;charset=utf8");
             // 设置发件人
-            msg.setFrom(new InternetAddress("xxxxxxxx@qq.com"));    //注意:此处设置SMTP发件人
+            msg.setFrom(new InternetAddress(MAIL));    //注意:此处设置SMTP发件人
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(targetMail));
             transport = session.getTransport();
             // 连接邮件服务器
-            transport.connect("xxxxxxxxx@qq.com", "xxxxxxxxx");     //注意:此处设置SMTP发件服务器的账号、密码
+            transport.connect(MAIL, PASSWORD);
             // 发送邮件
             transport.sendMessage(msg, msg.getAllRecipients());
             transport.close();
@@ -67,6 +70,9 @@ public abstract class MailUtil {
         }
     }
 
+    public static void main(String[] args) {
+        send("hello","hello world!");
+    }
 
 
 }

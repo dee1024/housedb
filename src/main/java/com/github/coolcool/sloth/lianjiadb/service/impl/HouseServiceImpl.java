@@ -44,10 +44,10 @@ public  class HouseServiceImpl implements HouseService{
 	@Override
 	public Boolean isExist(String code) {
 		int count = houseMapper.countByCode(code);
-		if(count == 0)
-			return Boolean.FALSE;
-		else
+		if(count > 0)
 			return Boolean.TRUE;
+		else
+			return Boolean.FALSE;
 	}
 
 	@Override

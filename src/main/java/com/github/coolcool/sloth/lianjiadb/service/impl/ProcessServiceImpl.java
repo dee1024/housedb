@@ -397,8 +397,8 @@ public  class ProcessServiceImpl implements ProcessService{
 							logger.info("house is on sell : "+JSONObject.toJSONString(houseindex));
 							//判断是否已经存在, 不存在则新增入库
 							Boolean isExisted = houseService.isExist(houseindex.getCode());
-							if(isExisted==null){
-								House house = LianjiaWebUtil.getAndGenChengjiaoHouseObject(houseindex.getUrl(), houseHtml);
+							if(Boolean.FALSE.equals(isExisted)){
+								House house = LianjiaWebUtil.getAndGenHouseObject(houseindex.getUrl(), houseHtml);
 								houseService.save(house);
 								logger.info("add an new house :"+JSONObject.toJSONString(houseindex));
 								return;
