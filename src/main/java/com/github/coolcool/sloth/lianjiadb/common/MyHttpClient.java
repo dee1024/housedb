@@ -122,8 +122,8 @@ public abstract class MyHttpClient {
             }else {
                 connection = (HttpURLConnection) tempUrl.openConnection(proxy);
             }
-            connection.setConnectTimeout(6000);
-            connection.setReadTimeout(6000);
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
             is = connection.getInputStream();
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader reader = new BufferedReader(isr);
@@ -265,6 +265,10 @@ public abstract class MyHttpClient {
         // 完毕，关闭所有链接
         os.close();
         is.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        System.out.println(get("https://gz.lianjia.com/ershoufang/tianhe/",null));
     }
 
 }

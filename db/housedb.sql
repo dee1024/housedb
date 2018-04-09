@@ -141,10 +141,10 @@ CREATE TABLE `houseprice` (
 ) ENGINE=InnoDB AUTO_INCREMENT=35746 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
---  Table structure for `http_proxy`
+--  Table structure for `httpproxy`
 -- ----------------------------
-DROP TABLE IF EXISTS `http_proxy`;
-CREATE TABLE `http_proxy` (
+DROP TABLE IF EXISTS `httpproxy`;
+CREATE TABLE `httpproxy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `host` varchar(50) NOT NULL,
   `port` int(11) NOT NULL,
