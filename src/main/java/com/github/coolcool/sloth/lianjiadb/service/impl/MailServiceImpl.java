@@ -1,6 +1,12 @@
-package com.github.coolcool.sloth.lianjiadb.common;
+package com.github.coolcool.sloth.lianjiadb.service.impl;
 
+import com.github.coolcool.sloth.lianjiadb.service.MailService;
 import com.sun.mail.util.MailSSLSocketFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -14,16 +20,23 @@ import java.util.Properties;
 /**
  * Created by dee on 2016/11/5.
  */
-public abstract class MailUtil {
+@Service
+public class MailServiceImpl implements MailService {
 
-    //注意:此处设置SMTP发件服务器的账号、密码
-    final static String MAIL = "AAAAAAAAAA@qq.com";
-    final static String PASSWORD = "PAAAAAAAAAA";
-    //注意:此处设置接受邮件通知的邮箱地址
-    final static String targetMail = "BBBBBBBBBB@qq.com";
+    Logger logger = LoggerFactory.getLogger(MailService.class);
 
-    static Properties props = new Properties();
-    static {
+    @Value("${com.github.coolcool.sloth.lianjiadb.mail.account}")
+    String mailAccount;
+
+    @Value("${com.github.coolcool.sloth.lianjiadb.mail.password}")
+    String mailPassword;
+
+    @Value("${com.github.coolcool.sloth.lianjiadb.mail.target}")
+    String targetMail;
+
+    @Bean
+    public Properties getPro(){
+        Properties props = new Properties();
         // 开启debug调试
         //props.setProperty("mail.debug", "true");
         // 发送服务器需要身份验证
@@ -32,7 +45,7 @@ public abstract class MailUtil {
         props.setProperty("mail.host", "smtp.qq.com");
         // 发送邮件协议名称
         props.setProperty("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.from", MAIL);
+        props.put("mail.smtp.from", mailAccount);
         MailSSLSocketFactory sf = null;
         try {
             sf = new MailSSLSocketFactory();
@@ -42,12 +55,15 @@ public abstract class MailUtil {
         sf.setTrustAllHosts(true);
         props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.smtp.ssl.socketFactory", sf);
+        return props;
     }
 
 
-    public static void send(String subject, String content){
+
+    @Override
+    public void send(String subject, String content){
         // 设置环境信息
-        Session session = Session.getInstance(props);
+        Session session = Session.getInstance(getPro());
 
         // 创建邮件对象
         Message msg = new MimeMessage(session);
@@ -57,21 +73,17 @@ public abstract class MailUtil {
             // 设置邮件内容
             msg.setContent(content,"text/html;charset=utf8");
             // 设置发件人
-            msg.setFrom(new InternetAddress(MAIL));    //注意:此处设置SMTP发件人
+            msg.setFrom(new InternetAddress(mailAccount));    //注意:此处设置SMTP发件人
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(targetMail));
             transport = session.getTransport();
             // 连接邮件服务器
-            transport.connect(MAIL, PASSWORD);
+            transport.connect(mailAccount, mailPassword);
             // 发送邮件
             transport.sendMessage(msg, msg.getAllRecipients());
             transport.close();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        send("hello","hello world!");
     }
 
 

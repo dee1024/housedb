@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class UrlUtil {
 
     public static final String ENCODING_UTF8 = "UTF-8";
-    static Logger logger = LoggerFactory.getLogger(MailUtil.class);
+    static Logger logger = LoggerFactory.getLogger(UrlUtil.class);
 
     /**
      * 处理URL参数串，把参数名和参数值转化成键值对的形式

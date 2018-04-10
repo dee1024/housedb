@@ -1,7 +1,6 @@
 package com.github.coolcool.sloth.lianjiadb.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.coolcool.sloth.lianjiadb.common.MailUtil;
 import com.github.coolcool.sloth.lianjiadb.common.SpringExtendConfig;
 import com.github.coolcool.sloth.lianjiadb.model.*;
 import com.github.coolcool.sloth.lianjiadb.model.Process;
@@ -55,6 +54,9 @@ public  class ProcessServiceImpl implements ProcessService{
 
 	@Autowired
 	private SpringExtendConfig springExtendConfig;
+
+	@Autowired
+	private MailService mailService;
 
 
 	@Value("${com.github.coolcool.sloth.lianjiadb.timetask.GenAndExeDailyProcessTimeTask.notifyAreas:}")
@@ -150,7 +152,7 @@ public  class ProcessServiceImpl implements ProcessService{
 												"【装修】："+nowhouse.getRoomSubType()+"<br/>" +
 												"【源地址】：<a href=\""+houseindex.getUrl()+"\">"+houseindex.getUrl()+"</a>"+
 												"";
-										MailUtil.send(subject, content);
+										mailService.send(subject, content);
 									}
 
 								}
@@ -448,7 +450,7 @@ public  class ProcessServiceImpl implements ProcessService{
 										"【装修】："+nowhouse.getRoomSubType()+"<br/>" +
 										"【源地址】：<a href=\""+houseindex.getUrl()+"\">"+houseindex.getUrl()+"</a>"+
 										"";
-								MailUtil.send(subject, content);
+								mailService.send(subject, content);
 							}else{
 								logger.info("price is the same,"+JSONObject.toJSONString(previousHouseprice));
 							}
